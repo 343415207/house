@@ -52,6 +52,7 @@ func UpPwdService(form *form.Login) (*model.User, error) {
 	return u, nil
 }
 
+//GetPListService ...
 func GetPListService(fm *form.PListForm) ([]*model.Project, error) {
 	entry := logrus.WithField("api", "GetPListService")
 	entry.Info(fm)
@@ -64,4 +65,22 @@ func GetPListService(fm *form.PListForm) ([]*model.Project, error) {
 		return nil, err
 	}
 	return l, nil
+}
+
+//SaveOrUpdateOrderService ...
+func SaveOrUpdateOrderService(fm *form.OrderForm) error {
+	info := &model.COrder{}
+	info.CPhone = fm.CPhone
+	info.CName = fm.CName
+	info.CSex = fm.CSex
+	info.Desc = fm.Desc
+	info.EscorteType = fm.EscorteType
+	//info.AccessTime = fm.AccessTime
+	if err := model.GetInfo(info, map[string]interface{}{"c_phone": fm.CPhone}); err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return model.DB().Create(info).Error
+		}
+		return err
+	}
+	return model.DB().Save(info).Error
 }

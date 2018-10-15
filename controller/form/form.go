@@ -10,4 +10,12 @@ type PListForm struct {
 }
 
 type OrderForm struct {
+	CName       string `form:"c_name"`
+	CPhone      string `form:"c_phone"`
+	CSex        int    `form:"c_sex"`
+	PID         int64  `form:"p_id"`
+	IsFirst     int    `form:"is_first"`
+	EscorteType int    `form:"escorte_type"`
+	AccessTime  string `form:"access_time"`
+	Desc        string `form:"desc"`
 }

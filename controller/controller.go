@@ -47,7 +47,13 @@ func GetPList(c *gin.Context) {
 
 //SaveOrUpdateOrder 报备客户
 func SaveOrUpdateOrder(c *gin.Context) {
-
+	fm := &form.OrderForm{}
+	if err := c.Bind(fm); err != nil {
+		HandleResp(c, nil, err)
+		return
+	}
+	err := service.SaveOrUpdateOrderService(fm)
+	HandleResp(c, nil, err)
 }
 
 //GetOrders 查看报备订单
